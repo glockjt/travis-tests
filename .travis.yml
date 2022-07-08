@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - 14
+
+cache:
+  directories:
+    - $HOME/.cache/yarn
+    - node_modules
+    - .next/cache
+
+jobs:
+  include:
+    - stage: Check for dirty projects
+      script:
+        - export DIRTY_JOB=$(./projects_with_changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
+        - echo DIRTY_JOB $DIRTY_JOB
