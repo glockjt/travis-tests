@@ -11,8 +11,8 @@ cache:
 
 stages:
   - check
-  # - test
-  #   if: env(DIRTY_JOB) = NOTHING
+  - name: test
+    if: env(DIRTY_JOB) = NOTHING
 
 jobs:
   include:
@@ -20,6 +20,6 @@ jobs:
       script:
         - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
         - echo DIRTY_JOB $DIRTY_JOB
-    # - stage: test
-    #   script:
-    #     - echo In Testing...
+    - stage: test
+      script:
+        - echo In Testing...
