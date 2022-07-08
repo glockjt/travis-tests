@@ -11,8 +11,7 @@ cache:
 
 stages:
   - check
-  - name: test
-    if: env(DIRTY_JOB) = NOTHING
+  - test
 
 jobs:
   include:
@@ -22,4 +21,5 @@ jobs:
         - echo DIRTY_JOB $DIRTY_JOB
     - stage: test
       script:
-        - echo In Testing...
+        - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
+        - echo Testing...
