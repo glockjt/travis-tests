@@ -23,4 +23,6 @@ then
         [[ ! -z "$PROJECTS_CHANGED" ]] && PROJECTS_CHANGED="${PROJECTS_CHANGED}/node" || PROJECTS_CHANGED="node"
     fi
     echo $PROJECTS_CHANGED
+else
+  echo NOTHING
 fi

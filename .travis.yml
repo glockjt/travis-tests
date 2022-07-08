@@ -9,9 +9,17 @@ cache:
     - node_modules
     - .next/cache
 
+stages:
+  - check
+  - test
+    if: env(DIRTY_JOB) = NOTHING
+
 jobs:
   include:
-    - stage: Check for dirty projects
+    - stage: check
       script:
         - export DIRTY_JOB=$(./projects_with_changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
         - echo DIRTY_JOB $DIRTY_JOB
+    - stage: test
+      script:
+        - echo In Testing...
