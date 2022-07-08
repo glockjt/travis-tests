@@ -18,7 +18,7 @@ jobs:
   include:
     - stage: check
       script:
-        - export DIRTY_JOB=$(source projects_with_changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
+        - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
         - echo DIRTY_JOB $DIRTY_JOB
     # - stage: test
     #   script:
