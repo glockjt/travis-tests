@@ -4,6 +4,7 @@ node_js:
   - 14
 
 _shared_job: &shared_job
+  - echo $NEXT_PATH
   - echo $TRAVIS_PULL_REQUEST_BRANCH
   - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
   - echo DIRTY_JOB $DIRTY_JOB
@@ -18,6 +19,10 @@ stages:
   - check
   - test
 
+env:
+  global:
+    - NEXT_PATH=next
+
 jobs:
   include:
     # - stage: check
@@ -26,6 +31,7 @@ jobs:
     #     - echo DIRTY_JOB -> $DIRTY_JOB
     - stage: test
       script:
+        - ls
         - *shared_job
         - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
         - echo Testing...
