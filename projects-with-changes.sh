@@ -6,7 +6,7 @@ git remote set-branches --add origin main
 git fetch
 GIT_DIFF=$(git --no-pager diff --name-only origin/main...$BRANCH_TO_COMPARE)
 # GIT_DIFF=$(git --no-pager diff --name-only develop...develop)
-PROJECTS_CHANGED=""
+PROJECTS_CHANGED="test"
 echo GIT_DIFF $GIT_DIFF
 if [[ ! -z "$GIT_DIFF" ]]
 then

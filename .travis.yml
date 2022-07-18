@@ -9,6 +9,9 @@ _shared_job: &shared_job
   - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_BRANCH)
   - echo DIRTY_JOB $DIRTY_JOB
 
+_next_job: &NEXT_JOB
+  - echo "NEXT JOB"
+
 cache:
   directories:
     - $HOME/.cache/yarn
@@ -33,5 +36,5 @@ jobs:
       script:
         - ls
         - *shared_job
-        - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
+        - if [[ $DIRTY_JOB != *"test"* ]]; then *NEXT_JOB; fi
         - echo Testing...
