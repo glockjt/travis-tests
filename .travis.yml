@@ -4,9 +4,8 @@ node_js:
   - 14
 
 _shared_job: &shared_job
-  script:
-    - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
-    - echo DIRTY_JOB -> $DIRTY_JOB
+  - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
+  - echo DIRTY_JOB -> $DIRTY_JOB
 
 cache:
   directories:
