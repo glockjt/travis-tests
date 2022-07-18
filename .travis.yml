@@ -25,6 +25,7 @@ stages:
 env:
   global:
     - NEXT_PATH=next
+    - SKIP=$(source skip.sh)
 
 jobs:
   include:
@@ -33,8 +34,12 @@ jobs:
     #     - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
     #     - echo DIRTY_JOB -> $DIRTY_JOB
     - stage: test
+      if: env(SKIP) = true
       script:
         - ls
         - *shared_job
-        - if [[ $DIRTY_JOB != *"test"* ]]; then *NEXT_JOB; fi
+        - if [[ $DIRTY_JOB != *"test"* ]]; then ${*NEXT_JOB}; fi
         - echo Testing...
+      if: env(SKIP) = false
+      script:
+        - echo skipping...
