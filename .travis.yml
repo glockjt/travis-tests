@@ -3,6 +3,11 @@ language: node_js
 node_js:
   - 14
 
+_shared_job: &shared_job
+  script:
+    - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
+    - echo DIRTY_JOB -> $DIRTY_JOB
+
 cache:
   directories:
     - $HOME/.cache/yarn
@@ -15,11 +20,12 @@ stages:
 
 jobs:
   include:
-    - stage: check
-      script:
-        - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
-        - echo DIRTY_JOB $DIRTY_JOB
+    # - stage: check
+    #   script:
+    #     - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
+    #     - echo DIRTY_JOB -> $DIRTY_JOB
     - stage: test
       script:
+        - <<: *shared_job
         - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
         - echo Testing...
