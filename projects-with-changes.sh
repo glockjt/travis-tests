@@ -24,5 +24,5 @@ then
     fi
     echo $PROJECTS_CHANGED
 else
-  echo NOTHING
+  echo "test"
 fi
