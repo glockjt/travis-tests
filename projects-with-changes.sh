@@ -2,6 +2,7 @@
 
 BRANCH_TO_COMPARE="$*"
 
+echo $(git remote -v)
 GIT_DIFF=$(git --no-pager diff --name-only main...$BRANCH_TO_COMPARE)
 # GIT_DIFF=$(git --no-pager diff --name-only develop...develop)
 PROJECTS_CHANGED=""
