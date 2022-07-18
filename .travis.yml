@@ -33,9 +33,16 @@ jobs:
     #     - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
     #     - echo DIRTY_JOB -> $DIRTY_JOB
     - stage: test
-      allow_failures: true
       script:
         - ls
         - *shared_job
-        - if [[ $DIRTY_JOB != *"test"* ]]; then ${*NEXT_JOB}; fi
+        - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
         - echo Testing...
+    - stage: another test
+      script:
+        - ls
+        - *shared_job
+        - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
+        - echo Testing...
+  allow_failures:
+    - stage: test
