@@ -25,6 +25,6 @@ jobs:
     #     - echo DIRTY_JOB -> $DIRTY_JOB
     - stage: test
       script:
-        - <<: *shared_job
+        - *shared_job
         - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
         - echo Testing...
