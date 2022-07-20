@@ -50,7 +50,7 @@ env:
 
 jobs:
   include:
-    - stage: next
-      name: Deploy next only
+      - name: Deploy node
       <<: *NODE_JOB
+      - name: Deploy next
       <<: *NEXT_JOB
