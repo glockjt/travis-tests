@@ -47,15 +47,10 @@ env:
   global:
     - NODE_PATH=node
     - NEXT_PATH=next
-    - VERCEL_ORG_ID=team_J4IoXbDBAzb93iSIhT289E1S
 
 jobs:
   include:
     - stage: next
       name: Deploy next only
-      if: type = push AND branch = glock/travis-optimizations
       <<: *NODE_JOB
       <<: *NEXT_JOB
-      env:
-        - STAGE_NAME=growth
-        - VERCEL_PROJECT_ID=prj_ZxbJ9lxPBKbix0KCSwoIHEYMjsfY
