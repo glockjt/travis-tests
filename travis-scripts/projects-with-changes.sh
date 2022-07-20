@@ -2,10 +2,10 @@
 
 BRANCH_TO_COMPARE="$*"
 
-git remote set-branches --add origin develop
+git remote set-branches --add origin main
 git fetch
 
-GIT_DIFF=$(git --no-pager diff --name-only origin/develop...$BRANCH_TO_COMPARE)
+GIT_DIFF=$(git --no-pager diff --name-only origin/main...$BRANCH_TO_COMPARE)
 # GIT_DIFF=$(git --no-pager diff --name-only develop...develop)
 PROJECTS_CHANGED="parent"
 
