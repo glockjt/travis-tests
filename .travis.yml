@@ -3,46 +3,59 @@ language: node_js
 node_js:
   - 14
 
-_shared_job: &shared_job
-  - echo $NEXT_PATH
-  - echo $TRAVIS_BRANCH
-  - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_BRANCH)
-  - echo DIRTY_JOB $DIRTY_JOB
+_shared_script: &shared_script
+  - cd $TRAVIS_BUILD_DIR
+  - source travis-scripts/projects-with-changes.sh $TRAVIS_BRANCH
 
 _next_job: &NEXT_JOB
-  - echo "NEXT JOB"
+  cache:
+    directories:
+      - $HOME/.cache/yarn
+      - node_modules
+      - .next/cache
 
-cache:
-  directories:
-    - $HOME/.cache/yarn
-    - node_modules
-    - .next/cache
+  before_install:
+    - *shared_script
 
-stages:
-  - check
-  - test
+  install:
+    - cd $TRAVIS_BUILD_DIR
+    - source travis-scripts/next/install.sh
+
+  script:
+    - cd $TRAVIS_BUILD_DIR
+    - source travis-scripts/next/script.sh
+
+_node_job: &NODE_JOB
+  cache:
+    directories:
+      - $HOME/.cache/yarn
+      - node_modules
+
+  before_install:
+    - *shared_script
+
+  install:
+    - echo "node"
+    - cd $TRAVIS_BUILD_DIR
+    - source travis-scripts/node/install.sh
+
+  script:
+    - cd $TRAVIS_BUILD_DIR
+    - source travis-scripts/node/script.sh
 
 env:
   global:
+    - NODE_PATH=node
     - NEXT_PATH=next
+    - VERCEL_ORG_ID=team_J4IoXbDBAzb93iSIhT289E1S
 
 jobs:
   include:
-    # - stage: check
-    #   script:
-    #     - export DIRTY_JOB=$(source projects-with-changes.sh $TRAVIS_PULL_REQUEST_BRANCH)
-    #     - echo DIRTY_JOB -> $DIRTY_JOB
-    - name: Test
-      script:
-        - ls
-        - *shared_job
-        - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
-        - echo Testing...
-    - name: Test Another
-      script:
-        - ls
-        - *shared_job
-        - if [[ $DIRTY_JOB != *"test"* ]]; then travis_terminate 0; fi
-        - echo Testing...
-  # allow_failures:
-  #   - node_js: 14
+    - stage: next
+      name: Deploy next only
+      if: type = push AND branch = glock/travis-optimizations
+      <<: *NODE_JOB
+      <<: *NEXT_JOB
+      env:
+        - STAGE_NAME=growth
+        - VERCEL_PROJECT_ID=prj_ZxbJ9lxPBKbix0KCSwoIHEYMjsfY
