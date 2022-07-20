@@ -7,7 +7,7 @@ _shared_script: &shared_script
   - cd $TRAVIS_BUILD_DIR
   - source travis-scripts/projects-with-changes.sh $TRAVIS_BRANCH
 
-_next_job: &NEXT_JOB
+_node_and_next: &NODE_AND_NEXT
   cache:
     directories:
       - $HOME/.cache/yarn
@@ -15,31 +15,18 @@ _next_job: &NEXT_JOB
       - .next/cache
 
   before_install:
-    - *shared_script
+    - cd $TRAVIS_BUILD_DIR
+    - source travis-scripts/projects-with-changes.sh $TRAVIS_BRANCH
 
   install:
     - cd $TRAVIS_BUILD_DIR
     - source travis-scripts/next/install.sh
-
-  script:
-    - cd $TRAVIS_BUILD_DIR
-    - source travis-scripts/next/script.sh
-
-_node_job: &NODE_JOB
-  cache:
-    directories:
-      - $HOME/.cache/yarn
-      - node_modules
-
-  before_install:
-    - *shared_script
-
-  install:
-    - echo "node"
     - cd $TRAVIS_BUILD_DIR
     - source travis-scripts/node/install.sh
 
   script:
+    - cd $TRAVIS_BUILD_DIR
+    - source travis-scripts/next/script.sh
     - cd $TRAVIS_BUILD_DIR
     - source travis-scripts/node/script.sh
 
@@ -50,7 +37,5 @@ env:
 
 jobs:
   include:
-    - name: Deploy node
-      <<: *NODE_JOB
-    - name: Deploy next
-      <<: *NEXT_JOB
+    - name: Deploy node and next
+      <<: *NODE_AND_NEXT
