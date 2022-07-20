@@ -1,6 +1,9 @@
 #!/bin/sh
 
-if [[ $NEXT_DIRTY == *"next"* ]]
+echo "script"
+echo $NEXT_DIRTY
+
+if [[ $NEXT_DIRTY ]]
 then
   echo "next script"
 fi

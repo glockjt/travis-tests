@@ -1,6 +1,9 @@
 #!/bin/sh
 
-if [[ $NEXT_DIRTY == *"next"* ]]
+echo "install"
+echo $NEXT_DIRTY
+
+if [[ $NEXT_DIRTY ]]
 then
   echo "next install script"
   cd $NEXT_PATH
