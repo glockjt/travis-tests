@@ -50,7 +50,7 @@ env:
 
 jobs:
   include:
-      - name: Deploy node
+    - name: Deploy node
       <<: *NODE_JOB
-      - name: Deploy next
+    - name: Deploy next
       <<: *NEXT_JOB
