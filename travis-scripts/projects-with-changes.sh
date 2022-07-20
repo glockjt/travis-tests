@@ -9,6 +9,7 @@ GIT_DIFF=$(git --no-pager diff --name-only origin/main...$BRANCH_TO_COMPARE)
 # GIT_DIFF=$(git --no-pager diff --name-only develop...develop)
 PROJECTS_CHANGED="parent"
 
+echo GIT_DIFF
 printf $GIT_DIFF
 
 if [[ ! -z "$GIT_DIFF" ]]
