@@ -10,7 +10,7 @@ GIT_DIFF=$(git --no-pager diff --name-only origin/main...$BRANCH_TO_COMPARE)
 PROJECTS_CHANGED="parent"
 
 echo GIT_DIFF
-printf $GIT_DIFF
+echo -e $GIT_DIFF
 
 NEXT_DIRTY=""
 MOBILE_DIRTY=""
@@ -18,19 +18,19 @@ NODE_DIRTY=""
 
 if [[ ! -z "$GIT_DIFF" ]]
 then
-    if [[ $GIT_DIFF == *"next"* ]]
+    if [[ $GIT_DIFF == "next"* ]]
     then
         PROJECTS_CHANGED="next"
         NEXT_DIRTY="yes"
     fi
 
-    if [[ $GIT_DIFF == *"mobile"* ]]
+    if [[ $GIT_DIFF == "mobile"* ]]
     then
         MOBILE_DIRTY="yes"
         [[ ! -z "$PROJECTS_CHANGED" ]] && PROJECTS_CHANGED="${PROJECTS_CHANGED}/mobile" || PROJECTS_CHANGED="mobile"
     fi
 
-    if [[ $GIT_DIFF == *"node"* ]]
+    if [[ $GIT_DIFF == "node"* ]]
     then
         NODE_DIRTY="yes"
         [[ ! -z "$PROJECTS_CHANGED" ]] && PROJECTS_CHANGED="${PROJECTS_CHANGED}/node" || PROJECTS_CHANGED="node"
